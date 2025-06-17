@@ -3,14 +3,17 @@ package fr.sensorintegration.security.usermanagement.entity;
 import fr.sensorintegration.core.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "diag_account_")
 @Entity
@@ -27,9 +30,13 @@ public class Account implements UserDetails {
     private String password;
     private String lastname;
     private String firstname;
-    private boolean enabled;
+    private boolean enabled = true;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @CreationTimestamp
+    private Instant createdAt;
+    @UpdateTimestamp
+    private Instant updatedAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -63,6 +70,6 @@ public class Account implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return this.enabled;
     }
 }
