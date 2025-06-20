@@ -1,5 +1,7 @@
 package fr.sensorintegration.utils;
 
+import fr.sensorintegration.data.entity.DiagnosticHistory;
+import fr.sensorintegration.data.entity.Machine;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -47,28 +49,30 @@ public class DataGenerator {
         String machineType = MACHINE_TYPES.get(RANDOM.nextInt(MACHINE_TYPES.size()));
         int machineNumber = RANDOM.nextInt(5) + 1; // 1 à 5 machines de chaque type
         
-        return new Machine(
-            UUID.randomUUID(),
-            machineType + " " + machineNumber,
-            "Machine de " + machineType.toLowerCase() + " de production de bouteilles en plastique",
-            "Atelier de production"
-        );
+        Machine machine = new Machine();
+        machine.setId(String.valueOf(UUID.randomUUID()));
+        machine.setNom(machineType + " " + machineNumber);
+        machine.setDescription("Machine de " + machineType.toLowerCase() + " de production de bouteilles en plastique");
+        machine.setLocalisation("Atelier de production");
+        
+        return machine;
     }
     
     public static DiagnosticHistory generateDiagnostic(Machine machine) {
         String machineType = machine.getNom().split(" ")[0]; // Récupère le type de machine (Moulage ou Soufflage)
         
-        return new DiagnosticHistory(
-            UUID.randomUUID(),
-            machine,
-            LocalDateTime.now().minusDays(RANDOM.nextInt(365)),
-            DIAGNOSTIC_TYPES.get(RANDOM.nextInt(DIAGNOSTIC_TYPES.size())),
-            "Détection d'un " + generateRandomIssue(machineType),
-            STATUSES.get(RANDOM.nextInt(STATUSES.size())),
-            generateInterventionDetails(machineType),
-            TECHNICIANS.get(RANDOM.nextInt(TECHNICIANS.size())),
-            null
-        );
+        DiagnosticHistory diagnostic = new DiagnosticHistory();
+        diagnostic.setId(UUID.randomUUID().toString());
+        diagnostic.setMachine(machine);
+        diagnostic.setTimestamp(LocalDateTime.now().minusDays(RANDOM.nextInt(365)));
+        diagnostic.setDiagnosticType(DIAGNOSTIC_TYPES.get(RANDOM.nextInt(DIAGNOSTIC_TYPES.size())));
+        diagnostic.setDiagnosticDetails("Détection d'un " + generateRandomIssue(machineType));
+        diagnostic.setStatus(STATUSES.get(RANDOM.nextInt(STATUSES.size())));
+        diagnostic.setInterventionDetails(generateInterventionDetails(machineType));
+        diagnostic.setTechnician(TECHNICIANS.get(RANDOM.nextInt(TECHNICIANS.size())));
+        diagnostic.setInterventionDate(LocalDateTime.now().minusDays(RANDOM.nextInt(30)));
+        
+        return diagnostic;
     }
     
     private static String generateRandomIssue(String machineType) {
@@ -108,5 +112,54 @@ public class DataGenerator {
         return IntStream.range(0, count)
             .mapToObj(i -> generateDiagnostic(machine))
             .collect(Collectors.toList());
+    }
+    
+    public static DiagnosticHistory generateTemporalDiagnostic(Machine machine, String workflowId) {
+        String machineType = machine.getNom().split(" ")[0];
+        
+        DiagnosticHistory diagnostic = new DiagnosticHistory();
+        diagnostic.setId(workflowId);
+        diagnostic.setMachine(machine);
+        diagnostic.setTimestamp(LocalDateTime.now());
+        diagnostic.setDiagnosticType("Diagnostic automatique via Temporal");
+        diagnostic.setDiagnosticDetails("Workflow automatisé - " + generateRandomIssue(machineType));
+        diagnostic.setStatus("En cours");
+        diagnostic.setInterventionDetails("Diagnostic généré par workflow Temporal");
+        diagnostic.setTechnician("Système automatique");
+        diagnostic.setInterventionDate(null);
+        
+        return diagnostic;
+    }
+    
+    public static List<Machine> generateMachinesForTesting(int count) {
+        List<Machine> machines = new ArrayList<>();
+        
+        for (int i = 0; i < count; i++) {
+            String machineType = MACHINE_TYPES.get(i % MACHINE_TYPES.size());
+            int machineNumber = (i / MACHINE_TYPES.size()) + 1;
+            
+            Machine machine = new Machine();
+            machine.setId(String.valueOf(UUID.randomUUID()));
+            machine.setNom(machineType + " " + machineNumber);
+            machine.setDescription("Machine de test " + machineType.toLowerCase() + " - Générée automatiquement");
+            machine.setLocalisation("Zone de test " + ((i % 3) + 1));
+            
+            machines.add(machine);
+        }
+        
+        return machines;
+    }
+    
+    public static List<String> generateDiagnosticScenarios() {
+        return Arrays.asList(
+            "Surveillance routine",
+            "Diagnostic d'urgence",
+            "Maintenance préventive",
+            "Vérification post-réparation",
+            "Calibration des capteurs",
+            "Test de performance",
+            "Diagnostic prédictif",
+            "Inspection qualité"
+        );
     }
 }

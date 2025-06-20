@@ -26,4 +26,26 @@ public interface DiagnosticHistoryRepository extends JpaRepository<DiagnosticHis
     List<DiagnosticHistory> findByMachineAndDiagnosticType(
             @Param("machine") Machine machine,
             @Param("diagnosticType") String diagnosticType);
+    
+    List<DiagnosticHistory> findByStatus(String status);
+    
+    List<DiagnosticHistory> findByTechnician(String technician);
+    
+    @Query("SELECT dh FROM DiagnosticHistory dh WHERE dh.status = :status AND dh.machine = :machine")
+    List<DiagnosticHistory> findByStatusAndMachine(@Param("status") String status, @Param("machine") Machine machine);
+    
+    @Query("SELECT dh FROM DiagnosticHistory dh WHERE dh.technician = :technician AND dh.timestamp BETWEEN :startDate AND :endDate")
+    List<DiagnosticHistory> findByTechnicianAndDateRange(
+            @Param("technician") String technician,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate);
+    
+    @Query("SELECT COUNT(dh) FROM DiagnosticHistory dh WHERE dh.status = :status")
+    long countByStatus(@Param("status") String status);
+    
+    @Query("SELECT COUNT(dh) FROM DiagnosticHistory dh WHERE dh.technician = :technician")
+    long countByTechnician(@Param("technician") String technician);
+    
+    @Query("SELECT COUNT(dh) FROM DiagnosticHistory dh WHERE dh.machine = :machine")
+    long countByMachine(@Param("machine") Machine machine);
 }

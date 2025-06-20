@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
@@ -16,6 +18,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     
     private final MachineService machineService;
     private final DiagnosticHistoryService diagnosticHistoryService;
+    private static final Random RANDOM = new Random();
     
     @Override
     public void run(String... args) throws Exception {
@@ -26,12 +29,12 @@ public class DatabaseInitializer implements CommandLineRunner {
         for (int i = 0; i < 5; i++) {
             // Machine de moulage
             Machine moulage = DataGenerator.generateMachine();
-            machineService.save(moulage);
+            machineService.createMachine(moulage);
             machines.add(moulage);
             
             // Machine de soufflage
             Machine soufflage = DataGenerator.generateMachine();
-            machineService.save(soufflage);
+            machineService.createMachine(soufflage);
             machines.add(soufflage);
         }
         
@@ -41,9 +44,9 @@ public class DatabaseInitializer implements CommandLineRunner {
             // Le nombre de diagnostics dépend du type de machine
             int diagnosticCount;
             if (machine.getNom().startsWith("Moulage")) {
-                diagnosticCount = 8 + DataGenerator.RANDOM.nextInt(7); // 8 à 14 diagnostics
+                diagnosticCount = 8 + RANDOM.nextInt(7); // 8 à 14 diagnostics
             } else {
-                diagnosticCount = 6 + DataGenerator.RANDOM.nextInt(9); // 6 à 14 diagnostics
+                diagnosticCount = 6 + RANDOM.nextInt(9); // 6 à 14 diagnostics
             }
             
             List<DiagnosticHistory> diagnostics = DataGenerator.generateDiagnosticsForMachine(machine, diagnosticCount);

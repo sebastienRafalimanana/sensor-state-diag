@@ -33,7 +33,7 @@ public class RapportService {
     @Autowired
     private MachineRepository machineRepository;
 
-    public Rapport genererRapport(Long machineId){
+    public Rapport genererRapport(String machineId){
         logger.info("Generation d'un rapport pour la machine ID {}", machineId);
 
         // Vérifier l'existence de la machine
@@ -117,7 +117,7 @@ public class RapportService {
     }
 
     public List<Rapport> rechercherParMachineEtGenerateurEtDate(
-            Long machineId, String generePar, LocalDateTime debut, LocalDateTime fin) {
+            java.util.UUID machineId, String generePar, LocalDateTime debut, LocalDateTime fin) {
         return rapportRepository.findByMachineAndDateBetween(machineId, generePar, debut, fin);
     }
 
@@ -128,7 +128,7 @@ public class RapportService {
         return rapportRepository.countByMachineAndGenerator();
     }
 
-    public List<Rapport> rechercherRapportsAvecAlertesNonResolues(Long machineId, LocalDateTime depuis) {
+    public List<Rapport> rechercherRapportsAvecAlertesNonResolues(java.util.UUID machineId, LocalDateTime depuis) {
         return rapportRepository.findRecentWithUnresolvedAlerts(machineId, depuis);
     }
 }

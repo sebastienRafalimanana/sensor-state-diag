@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/rapports")
@@ -21,7 +22,7 @@ public class RapportController {
     @Autowired
     private RapportService rapportService;
     @PostMapping("/generer/{machineId}")
-    public ResponseEntity<Object> genererRapport(@PathVariable Long machineId) {
+    public ResponseEntity<Object> genererRapport(@PathVariable String machineId) {
         try {
             Rapport rapport = rapportService.genererRapport(machineId);
             return ResponseEntity.ok(rapport);
@@ -46,7 +47,7 @@ public class RapportController {
 
     @GetMapping("/ia/{machineId}")
     public ResponseEntity<List<Rapport>> rechercherParMachineEtGenerateurEtDate(
-            @PathVariable Long machineId,
+            @PathVariable UUID machineId,
             @RequestParam String generePar,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime debut,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fin) {
@@ -69,7 +70,7 @@ public class RapportController {
     }
     @GetMapping("/alertes-non-resolues/{machineId}")
     public ResponseEntity<List<Rapport>> rechercherRapportsAvecAlertesNonResolues(
-            @PathVariable Long machineId,
+            @PathVariable UUID machineId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime depuis) {
         List<Rapport> rapports = rapportService.rechercherRapportsAvecAlertesNonResolues(machineId, depuis);
         return ResponseEntity.ok(rapports);

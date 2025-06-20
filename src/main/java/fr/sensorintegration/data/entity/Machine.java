@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Machine {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
     private String nom;
     private String description;
     private String localisation;
