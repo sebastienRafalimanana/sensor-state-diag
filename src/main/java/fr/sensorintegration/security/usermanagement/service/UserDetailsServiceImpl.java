@@ -1,13 +1,12 @@
 package fr.sensorintegration.security.usermanagement.service;
 
-import fr.sensorintegration.security.usermanagement.entity.Account;
-import fr.sensorintegration.security.usermanagement.repository.AccountRepository;
+import fr.sensorintegration.security.usermanagement.data.entity.Account;
+import fr.sensorintegration.security.usermanagement.data.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package fr.sensorintegration.Repository;
+package fr.sensorintegration.data.repository;
 
-import fr.sensorintegration.Model.Historique;
+import fr.sensorintegration.data.entity.Historique;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

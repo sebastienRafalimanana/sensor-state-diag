@@ -1,14 +1,14 @@
-package fr.sensorintegration.Service;
+package fr.sensorintegration.business.service;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import fr.sensorintegration.Model.Capteur;
-import fr.sensorintegration.Model.DonneeCapteur;
-import fr.sensorintegration.Model.Machine;
-import fr.sensorintegration.Model.Rapport;
-import fr.sensorintegration.Repository.DonneeCapteurRepository;
-import fr.sensorintegration.Repository.MachineRepository;
-import fr.sensorintegration.Repository.RapportRepository;
+import fr.sensorintegration.data.entity.Capteur;
+import fr.sensorintegration.data.entity.DonneeCapteur;
+import fr.sensorintegration.data.entity.Machine;
+import fr.sensorintegration.data.entity.Rapport;
+import fr.sensorintegration.data.repository.DonneeCapteurRepository;
+import fr.sensorintegration.data.repository.MachineRepository;
+import fr.sensorintegration.data.repository.RapportRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

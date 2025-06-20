@@ -1,25 +1,27 @@
-package fr.sensorintegration.Model;
+package fr.sensorintegration.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class DonneeCapteur {
+
+public class Alerte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Float valeur;
+    private String type;
+    private String criticite;
+    private String description;
+    private Boolean resolue;
     private LocalDateTime timestamp;
+
     @ManyToOne
-    @JoinColumn(name = "capteur_id")
-    private Capteur capteur;
-
-
+    @JoinColumn(name = "machine_id")
+    private Machine machine;
 }

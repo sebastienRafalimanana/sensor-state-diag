@@ -1,6 +1,6 @@
-package fr.sensorintegration.Repository;
+package fr.sensorintegration.data.repository;
 
-import fr.sensorintegration.Model.DonneeCapteur;
+import fr.sensorintegration.data.entity.DonneeCapteur;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

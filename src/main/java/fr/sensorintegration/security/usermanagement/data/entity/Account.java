@@ -1,4 +1,4 @@
-package fr.sensorintegration.security.usermanagement.entity;
+package fr.sensorintegration.security.usermanagement.data.entity;
 
 import fr.sensorintegration.core.enums.Role;
 import jakarta.persistence.*;
@@ -55,21 +55,21 @@ public class Account implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return this.enabled;
+        return true;
     }
 }

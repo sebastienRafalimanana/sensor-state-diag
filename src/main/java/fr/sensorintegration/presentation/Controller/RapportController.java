@@ -1,7 +1,7 @@
-package fr.sensorintegration.Controller;
+package fr.sensorintegration.presentation.Controller;
 
-import fr.sensorintegration.Model.Rapport;
-import fr.sensorintegration.Service.RapportService;
+import fr.sensorintegration.data.entity.Rapport;
+import fr.sensorintegration.business.service.RapportService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

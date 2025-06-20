@@ -1,25 +1,23 @@
-package fr.sensorintegration.Model;
+package fr.sensorintegration.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 
-public class Alerte {
+public class Rapport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
-    private String criticite;
-    private String description;
-    private Boolean resolue;
-    private LocalDateTime timestamp;
+    private String resume;
+    private String recommandations;
+    private LocalDateTime date;
+    private String generePar;
 
     @ManyToOne
     @JoinColumn(name = "machine_id")

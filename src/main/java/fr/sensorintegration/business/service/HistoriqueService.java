@@ -1,4 +1,4 @@
-package fr.sensorintegration.Service;
+package fr.sensorintegration.business.service;
 
 import org.springframework.stereotype.Service;
 

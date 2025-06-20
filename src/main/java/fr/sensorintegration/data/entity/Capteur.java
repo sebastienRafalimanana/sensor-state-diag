@@ -1,4 +1,4 @@
-package fr.sensorintegration.Model;
+package fr.sensorintegration.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

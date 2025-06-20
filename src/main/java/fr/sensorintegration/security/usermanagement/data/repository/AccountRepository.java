@@ -1,6 +1,6 @@
-package fr.sensorintegration.security.usermanagement.repository;
+package fr.sensorintegration.security.usermanagement.data.repository;
 
-import fr.sensorintegration.security.usermanagement.entity.Account;
+import fr.sensorintegration.security.usermanagement.data.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

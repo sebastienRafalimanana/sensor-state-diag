@@ -1,7 +1,7 @@
 package fr.sensorintegration.business.mapper;
 
 import fr.sensorintegration.business.dto.AccountDto;
-import fr.sensorintegration.security.usermanagement.entity.Account;
+import fr.sensorintegration.security.usermanagement.data.entity.Account;
 import org.springframework.stereotype.Component;
 
 @Component

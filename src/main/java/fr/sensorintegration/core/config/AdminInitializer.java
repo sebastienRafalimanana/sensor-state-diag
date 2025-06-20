@@ -2,7 +2,6 @@ package fr.sensorintegration.core.config;
 
 import fr.sensorintegration.business.dto.AccountDto;
 import fr.sensorintegration.core.enums.Role;
-import fr.sensorintegration.security.usermanagement.entity.Account;
 import fr.sensorintegration.security.usermanagement.service.UserManagementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

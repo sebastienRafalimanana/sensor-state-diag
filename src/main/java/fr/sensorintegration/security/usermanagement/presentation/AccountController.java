@@ -5,15 +5,19 @@ import fr.sensorintegration.core.model.ResponseModel;
 import fr.sensorintegration.security.usermanagement.presentation.request.AuthenticationReq;
 import fr.sensorintegration.security.usermanagement.presentation.response.AuthenticationResponse;
 import fr.sensorintegration.security.usermanagement.service.UserManagementService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequiredArgsConstructor
-@RestController("account")
+@RequestMapping("/accounts")
+@Tag(name = "Account management", description = "Controller for Account")
 public class AccountController {
     private final UserManagementService userManagementService;
 
@@ -27,7 +31,7 @@ public class AccountController {
                 .build());
     }
 
-    @PostMapping(path = "/sign-in")
+    @PostMapping(path = "/signIn")
     ResponseEntity<ResponseModel<AuthenticationResponse>> signIn(@RequestBody AuthenticationReq authenticationReq) {
         AuthenticationResponse authenticationResponse = userManagementService.signIn(authenticationReq.username(), authenticationReq.password());
         return ResponseEntity.status(HttpStatus.OK).body(ResponseModel.<AuthenticationResponse>builder()

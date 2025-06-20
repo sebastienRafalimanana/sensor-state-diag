@@ -3,12 +3,10 @@ package fr.sensorintegration.security.usermanagement.service;
 import fr.sensorintegration.business.dto.AccountDto;
 import fr.sensorintegration.business.mapper.AccountMapper;
 import fr.sensorintegration.core.exception.BadRequestException;
-import fr.sensorintegration.security.usermanagement.entity.Account;
+import fr.sensorintegration.security.usermanagement.data.entity.Account;
 import fr.sensorintegration.security.usermanagement.presentation.response.AuthenticationResponse;
-import fr.sensorintegration.security.usermanagement.repository.AccountRepository;
-import jakarta.persistence.EntityNotFoundException;
+import fr.sensorintegration.security.usermanagement.data.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 

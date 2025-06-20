@@ -1,4 +1,4 @@
-package fr.sensorintegration.Model;
+package fr.sensorintegration.data.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,11 +12,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Machine {
+public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
-    private String description;
-    private String localisation;
+    private String email;
+    private String motDePasse;
+    private String role;
 }

@@ -1,6 +1,6 @@
-package fr.sensorintegration.Repository;
+package fr.sensorintegration.data.repository;
 
-import fr.sensorintegration.Model.Rapport;
+import fr.sensorintegration.data.entity.Rapport;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -33,47 +33,59 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     @Value("${app.jwt-secret}")
     private String secretKey;
-    @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private static final String[] WHITE_LIST = {
+            "/swagger-ui/**",
+            "/api-docs/**",
+            "/v3/api-docs/**",
+            "/accounts/signIn"
+
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        System.out.println("test test************");
         return  httpSecurity
-                .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize->authorize.anyRequest().permitAll())
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(WHITE_LIST).permitAll()
+                        .anyRequest().authenticated()
+                )
                 .userDetailsService(userDetailsServiceImpl)
                 .authenticationManager(authenticationManager(userDetailsServiceImpl))
-                .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
+                .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
                 .build();
     }
 
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-    @Bean
-    JwtEncoder jwtEncoder(){
-        return  new NimbusJwtEncoder(new ImmutableSecret<>(secretKey.getBytes()));
     }
 
     @Bean
-    JwtDecoder jwtDecoder(){
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(),"RSA");
+    JwtEncoder jwtEncoder() {
+        return new NimbusJwtEncoder(new ImmutableSecret<>(secretKey.getBytes()));
+    }
+
+    @Bean
+    JwtDecoder jwtDecoder() {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "RSA");
         return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS512).build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(UserDetailsServiceImpl userDetailsServiceImpl){
+    public AuthenticationManager authenticationManager(UserDetailsServiceImpl userDetailsServiceImpl) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsServiceImpl);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        return  new ProviderManager(daoAuthenticationProvider);
+        return new ProviderManager(daoAuthenticationProvider);
     }
 
     @Bean
