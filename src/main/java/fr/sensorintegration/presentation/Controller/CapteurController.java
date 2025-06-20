@@ -86,7 +86,7 @@ public class CapteurController {
     }
     
     @GetMapping("/machine/{machineId}")
-    public ResponseEntity<List<Capteur>> getCapteursByMachine(@PathVariable("machineId") UUID machineId) {
+    public ResponseEntity<List<Capteur>> getCapteursByMachine(@PathVariable("machineId") String machineId) {
         try {
             List<Capteur> capteurs = capteurService.getCapteursByMachineId(machineId);
             if (capteurs.isEmpty()) {

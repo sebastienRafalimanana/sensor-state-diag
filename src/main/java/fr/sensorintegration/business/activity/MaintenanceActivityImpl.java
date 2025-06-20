@@ -43,7 +43,7 @@ public class MaintenanceActivityImpl implements MaintenanceActivity {
             System.out.println("================================");
             
             // Vérifier que la machine existe
-            if (!machineService.existsById(UUID.fromString(machine.getId()))) {
+            if (!machineService.existsById(String.valueOf(UUID.fromString(machine.getId())))) {
                 throw new RuntimeException("Machine introuvable avec l'ID: " + machine.getId());
             }
             

@@ -118,7 +118,7 @@ public class DiagnosticActivityImpl implements DiagnosticActivity {
             return false;
         }
         
-        boolean exists = machineService.existsById(UUID.fromString(machine.getId()));
+        boolean exists = machineService.existsById(String.valueOf(UUID.fromString(machine.getId())));
         if (!exists) {
             return false;
         }
