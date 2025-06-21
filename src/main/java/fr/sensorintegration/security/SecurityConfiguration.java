@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import fr.sensorintegration.security.usermanagement.service.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,14 +32,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import javax.crypto.spec.SecretKeySpec;
 
 
+@Slf4j
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     @Value("${app.jwt-secret}")
     private String secretKey;
-
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
     private static final String[] WHITE_LIST = {
             "/swagger-ui/**",
             "/api-docs/**",
@@ -46,6 +48,13 @@ public class SecurityConfiguration {
             "/accounts/signIn"
 
     };
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        log.info("Using BCryptPasswordEncoder");
+        return new BCryptPasswordEncoder();
+    }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -61,12 +70,6 @@ public class SecurityConfiguration {
                 .authenticationManager(authenticationManager(userDetailsServiceImpl))
                 .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
                 .build();
-    }
-
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean

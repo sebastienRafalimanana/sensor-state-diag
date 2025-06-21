@@ -7,6 +7,7 @@ import fr.sensorintegration.security.usermanagement.presentation.response.Authen
 import fr.sensorintegration.security.usermanagement.service.UserManagementService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/accounts")
@@ -33,6 +35,7 @@ public class AccountController {
 
     @PostMapping(path = "/signIn")
     ResponseEntity<ResponseModel<AuthenticationResponse>> signIn(@RequestBody AuthenticationReq authenticationReq) {
+        log.info("Sign in request received for username: {}", authenticationReq.username());
         AuthenticationResponse authenticationResponse = userManagementService.signIn(authenticationReq.username(), authenticationReq.password());
         return ResponseEntity.status(HttpStatus.OK).body(ResponseModel.<AuthenticationResponse>builder()
                 .message("Sign in successfully")

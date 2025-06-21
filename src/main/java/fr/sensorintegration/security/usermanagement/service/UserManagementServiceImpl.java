@@ -7,6 +7,7 @@ import fr.sensorintegration.security.usermanagement.data.entity.Account;
 import fr.sensorintegration.security.usermanagement.presentation.response.AuthenticationResponse;
 import fr.sensorintegration.security.usermanagement.data.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -55,6 +57,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     public AuthenticationResponse signIn(String username, String password) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            log.debug(authentication.toString());
             if (authentication.isAuthenticated()){
                 Instant instant = Instant.now();
                 String scope = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
